@@ -5,11 +5,7 @@
  * to customize this controller
  */
 
-
 const stripe = require('stripe')('sk_test_Xix1Qd20RbMlFI6P334IpQrr');
-// console.debug("######### Begin ######");
-// console.debug(strapi);
-// console.debug("######## END #######");
 
 module.exports = {
 
@@ -20,17 +16,14 @@ module.exports = {
     const {name, total, items, stripeTokenId} = ctx.request.body;
     const {id} = ctx.state.user;
 
-    // const charge = await strapi.charges.create(
-    //   {
-    //     amount: Math.round(total * 100),
-    //     currency: "usd",
-    //     source: stripeTokenId,
-    //     description: `Order ${new Date()} by ${ctx.state.user.username}`
-    //   }
-    // );
-
-
-
+    const charge = await strapi.charges.create(
+      {
+        amount: Math.round(total * 100),
+        currency: "usd",
+        source: stripeTokenId,
+        description: `Order ${new Date()} by ${ctx.state.user.username}`
+      }
+    );
 
     const order =  await  strapi.services.order.create({
       name,
@@ -38,8 +31,7 @@ module.exports = {
       items,
       user: id
     });
-    console.debug("######  ORDER #####")
-    console.debug(order)
+
     return  order;
   }
 
