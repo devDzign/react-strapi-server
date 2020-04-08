@@ -16,7 +16,7 @@ module.exports = {
     const {name, total, items, stripeTokenId} = ctx.request.body;
     const {id} = ctx.state.user;
 
-    const charge = await strapi.charges.create(
+    const charge = await stripe.charges.create(
       {
         amount: Math.round(total * 100),
         currency: "usd",
